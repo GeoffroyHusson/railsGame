@@ -1,11 +1,15 @@
 class TournoisController < ApplicationController
   before_action :set_tournoi, only: [:show, :edit, :update, :destroy]
-  
+
   respond_to :html
 
   def index
-    @tournois = Tournoi.all
-    respond_with(@tournois)
+    if user_signed_in?
+      @tournois = Tournoi.all
+      respond_with(@tournois)
+    else 
+      redirect_to new_user_session_path
+    end
   end
 
   def show

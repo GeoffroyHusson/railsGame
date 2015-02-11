@@ -4,6 +4,13 @@
   = stylesheet_link_tag "application", media: "all" 
   = csrf_meta_tag 
   %body
-  =link_to ('Liste des tournois'), root_path
-  =yield 
-
+  - if user_signed_in?
+    =link_to ('Liste des tournois'), root_path
+    =link_to ('Editer mon profil'), edit_user_registration_path(current_user)
+    =link_to ('Déconnexion'), sign_out_path
+    - if current_user.statut == User::ADMIN
+      Vous êtes un administrateur
+      = User::ADMIN
+    - else 
+      Vous êtes un utilisateur
+  =yield
