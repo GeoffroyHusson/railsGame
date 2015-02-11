@@ -1,0 +1,9 @@
+%html
+  %head
+  %title RailsGame
+  = stylesheet_link_tag "application", media: "all" 
+  = csrf_meta_tag 
+  %body
+  =link_to ('Liste des tournois'), root_path
+  =yield 
+

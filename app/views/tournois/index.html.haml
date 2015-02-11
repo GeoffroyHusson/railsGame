@@ -1,0 +1,22 @@
+%h1 Listing tournois
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th Place
+      %th Nbplayermax
+      %th Date
+      %th{:colspan => "3"}
+  %tbody
+    - @tournois.each do |tournoi| 
+      %tr
+        %td= tournoi.name 
+        %td= tournoi.place 
+        %td= tournoi.nbPlayerMax 
+        %td= tournoi.date 
+        %td= link_to 'Show', tournoi 
+        %td= link_to 'Edit', edit_tournoi_path(tournoi) 
+        %td= link_to 'Destroy', tournoi, method: :delete, data: { confirm: 'Are you sure?' } 
+%br
+= link_to 'New Tournoi', new_tournoi_path 

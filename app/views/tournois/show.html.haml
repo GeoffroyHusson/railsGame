@@ -1,0 +1,17 @@
+%p#notice= notice
+
+%p
+  %strong Name:
+  = @tournoi.name
+%p
+  %strong Place:
+  = @tournoi.place
+%p
+  %strong Nbplayermax
+  = @tournoi.nbPlayerMax
+%p
+  %strong>Date:
+  = @tournoi.date
+
+= link_to 'Edit', edit_tournoi_path(@tournoi)  |
+= link_to 'Back', tournois_path 
