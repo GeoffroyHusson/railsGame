@@ -1,0 +1,33 @@
+= form_for(@tournoi) do |f|
+  - if @tournoi.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@tournoi.errors.count, "error")
+        prohibited this tournoi from being saved:
+      %ul
+        - @tournoi.errors.full_messages.each do |message|
+          %li= message
+  .field
+    = f.label :name
+    %br/
+    = f.text_field :name
+  .field
+    = f.label :place
+    %br/
+    = f.text_field :place
+  .field
+    = f.label :nbPlayerMax
+    %br/
+    = f.text_field :nbPlayerMax
+  .field
+    = f.label :date
+    %br/
+    = f.date_select :date
+    %br/
+  .field
+    - @games.each do |game|
+      = check_box_tag("tournoi[game_ids][]", game.id , @tournoi.game_ids.include?(game.id))
+      = game.title
+      %br
+  .actions
+    = f.submit

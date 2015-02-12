@@ -12,6 +12,14 @@
 %p
   %strong>Date:
   = @tournoi.date
-
-= link_to 'Edit', edit_tournoi_path(@tournoi)  |
-= link_to 'Back', tournois_path 
+%p
+  %strong>Jeux sélectionnés:
+  %br
+  - @tournoi.games.each do |tg|
+    = tg.title 
+    %br
+    =tg.description
+    %br
+- if current_user.admin?
+  = link_to 'Edit', edit_tournoi_path(@tournoi)  |
+  = link_to 'Back', tournois_path

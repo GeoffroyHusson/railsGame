@@ -1,0 +1,22 @@
+= form_for @game do |f|
+  - if @game.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@game.errors.count, "error") 
+        prohibited this game from being saved:
+
+      %ul
+        @game.errors.full_messages.each do |message|
+        %li 
+          = message
+
+  .field
+    = f.label :titre 
+    %br
+    = f.text_field :title
+  .field
+    = f.label :description 
+    %br
+    = f.text_area :description
+  .actions
+    = f.submit

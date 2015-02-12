@@ -3,8 +3,13 @@ Rails.application.routes.draw do
   resource :geocoder
 
   resources :user
+  resources :games
+
 
   root :to => "tournois#index"
+
+  get 'delete_tounoi/(:id)', to: "tournois#destroy", :as => "delete_tounoi"
+
   devise_for :users,:controllers => { registrations: 'registrations' }, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
   
   devise_scope :user do

@@ -8,9 +8,10 @@
     =link_to ('Liste des tournois'), root_path
     =link_to ('Editer mon profil'), edit_user_registration_path(current_user)
     =link_to ('Déconnexion'), sign_out_path
-    - if current_user.statut == User::ADMIN
+    - if current_user.admin?
       Vous êtes un administrateur
-      = User::ADMIN
+      = link_to ('Ajouter un nouveau jeu'), new_game_path
+      = link_to ('Liste des jeux'), games_path
     - else 
       Vous êtes un utilisateur
   =yield

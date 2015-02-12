@@ -13,31 +13,39 @@ class TournoisController < ApplicationController
   end
 
   def show
-    respond_with(@tournoi)
+    set_tournoi
   end
 
   def new
     @tournoi = Tournoi.new
+    @games = Game.all
     respond_with(@tournoi)
   end
 
   def edit
+    @games = Game.all
   end
 
   def create
     @tournoi = Tournoi.new(tournoi_params)
-    @tournoi.save
-    respond_with(@tournoi)
+    if @tournoi.save
+      redirect_to root_path
+    end
   end
 
   def update
-    @tournoi.update(tournoi_params)
-    respond_with(@tournoi)
+    set_tournoi
+    @games = Game.all
+    if @tournoi.update_attributes(tournoi_params)
+      redirect_to (@tournoi)
+    end
   end
 
   def destroy
-    @tournoi.destroy
-    respond_with(@tournoi)
+    @tournoi.tournoi_games.where("tournoi_id = ?",params[:id]).delete_all
+    if @tournoi.destroy
+      redirect_to root_path
+    end
   end
 
   private
@@ -46,6 +54,6 @@ class TournoisController < ApplicationController
     end
 
     def tournoi_params
-      params.require(:tournoi).permit(:name, :place, :nbPlayerMax, :date)
+      params.require(:tournoi).permit(:name, :place, :nbPlayerMax, :date, :game_ids => [])
     end
 end

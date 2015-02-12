@@ -1,11 +1,11 @@
-%h1 Listing tournois
+%h1 Liste des tournois
 
 %table
   %thead
     %tr
-      %th Name
-      %th Place
-      %th Nbplayermax
+      %th Nom
+      %th Lieu
+      %th Nombre de joueur max
       %th Date
       %th{:colspan => "3"}
   %tbody
@@ -16,7 +16,8 @@
         %td= tournoi.nbPlayerMax 
         %td= tournoi.date 
         %td= link_to 'Show', tournoi 
-        %td= link_to 'Edit', edit_tournoi_path(tournoi) 
-        %td= link_to 'Destroy', tournoi, method: :delete, data: { confirm: 'Are you sure?' } 
-%br
+        - if current_user.admin?
+          %td= link_to 'Edit', edit_tournoi_path(tournoi) 
+          %td= link_to 'Destroy', delete_tounoi_path(tournoi), method: :delete, data: { confirm: 'Are you sure?' } 
+          %br
 = link_to 'New Tournoi', new_tournoi_path 
