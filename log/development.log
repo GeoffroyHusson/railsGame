@@ -24723,3 +24723,29 @@ Started GET "/assets/scaffolds.css?body=1" for 127.0.0.1 at 2015-02-12 17:16:32 
 
 
 Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-02-12 17:16:32 +0100
+
+
+Started GET "/" for 127.0.0.1 at 2015-02-12 17:20:45 +0100
+Processing by TournoisController#index as HTML
+  [1m[35mUser Load (1.0ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 11  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mTournoi Load (0.0ms)[0m  [1mSELECT "tournois".* FROM "tournois"[0m
+  Rendered tournois/index.html.haml within layouts/application (4.0ms)
+Completed 200 OK in 65ms (Views: 60.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/assets/scaffolds.css?body=1" for 127.0.0.1 at 2015-02-12 17:20:45 +0100
+
+
+Started GET "/assets/games.css?body=1" for 127.0.0.1 at 2015-02-12 17:20:45 +0100
+
+
+Started GET "/assets/tournois.css?body=1" for 127.0.0.1 at 2015-02-12 17:20:45 +0100
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2015-02-12 17:20:45 +0100
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2015-02-12 17:20:45 +0100
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"   ORDER BY "users"."id" ASC LIMIT 1[0m
+  [1m[35mUser Load (0.0ms)[0m  SELECT  "users".* FROM "users"   ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36mRegisterTournoi Load (1.0ms)[0m  [1mSELECT "register_tournois".* FROM "register_tournois"  WHERE "register_tournois"."user_id" = $1[0m  [["user_id", 10]]
