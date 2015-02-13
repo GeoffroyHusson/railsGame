@@ -1,5 +1,5 @@
 class TournoisController < ApplicationController
-  before_action :set_tournoi, only: [:show, :edit, :update, :destroy]
+  before_action :set_tournoi, only: [:show, :edit, :update, :destroy, :register]
 
   respond_to :html
 
@@ -43,8 +43,20 @@ class TournoisController < ApplicationController
 
   def destroy
     @tournoi.tournoi_games.where("tournoi_id = ?",params[:id]).delete_all
+    @tournoi.register_tournois.where("tournoi_id = ?",params[:id]).delete_all
     if @tournoi.destroy
       redirect_to root_path
+    end
+  end
+
+  def register
+    @register_tournoi = RegisterTournoi.new
+    @register_tournoi.user_id = current_user.id
+    @register_tournoi.tournoi_id = params[:id]
+    if @tournoi.nbPlayerMax > @tournoi.users.count
+      if @register_tournoi.save
+        redirect_to root_path
+      end
     end
   end
 
@@ -56,4 +68,5 @@ class TournoisController < ApplicationController
     def tournoi_params
       params.require(:tournoi).permit(:name, :place, :nbPlayerMax, :date, :game_ids => [])
     end
+
 end

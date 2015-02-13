@@ -20,6 +20,19 @@
     %br
     =tg.description
     %br
+%p
+  %strong>Utilisateurs enregistrés:
+  %br
+  - @tournoi.users.each do |tu|
+    = tu.name
+    %br  
+%p
+  %strong>Match enregistrés
+  %br
+  - @tournoi.wars.each do |tu|
+    = tu.user_1_id
+    %br   
+=link_to 'Play', new_tournoi_war_path(@tournoi)
 - if current_user.admin?
   = link_to 'Edit', edit_tournoi_path(@tournoi)  |
   = link_to 'Back', tournois_path
