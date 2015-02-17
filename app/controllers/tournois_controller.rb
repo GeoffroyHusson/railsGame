@@ -1,4 +1,7 @@
 class TournoisController < ApplicationController
+  load_and_authorize_resource
+  before_action :authenticate_user!
+  before_action :acces_admin, only: [:edit]
   before_action :set_tournoi, only: [:show, :edit, :update, :destroy, :register]
 
   respond_to :html
@@ -24,10 +27,12 @@ class TournoisController < ApplicationController
 
   def edit
     @games = Game.all
+    authorize! :edit, @tournoi if can? :edit, @tournoi
   end
 
   def create
     @tournoi = Tournoi.new(tournoi_params)
+    @war = @tournoi.wars
     if @tournoi.save
       redirect_to root_path
     end
@@ -67,6 +72,10 @@ class TournoisController < ApplicationController
 
     def tournoi_params
       params.require(:tournoi).permit(:name, :place, :nbPlayerMax, :date, :game_ids => [])
+    end
+
+    def acces_admin
+      current_user.admin?
     end
 
 end

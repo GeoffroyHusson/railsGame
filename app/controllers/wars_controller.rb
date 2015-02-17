@@ -14,6 +14,7 @@ class WarsController < ApplicationController
 
 	def create
 		@war = War.new(war_params)
+		@war.tournoi_id = @tournoi.id
 		if @war.save
 			redirect_to tournoi_path(@tournoi)
 		end

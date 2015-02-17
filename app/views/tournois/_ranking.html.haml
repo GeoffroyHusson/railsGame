@@ -1,0 +1,3 @@
+- @tournoi.users.each do |tu|
+	- @tournoi.wars.each do |tw|
+		=tw.where(:user_1_id => tu.id)

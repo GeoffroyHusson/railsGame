@@ -10,10 +10,10 @@
   %strong Nbplayermax
   = @tournoi.nbPlayerMax
 %p
-  %strong>Date:
+  %strong Date:
   = @tournoi.date
 %p
-  %strong>Jeux sélectionnés:
+  %strong Jeux sélectionnés:
   %br
   - @tournoi.games.each do |tg|
     = tg.title 
@@ -21,17 +21,25 @@
     =tg.description
     %br
 %p
-  %strong>Utilisateurs enregistrés:
+  %strong Utilisateurs enregistrés:
   %br
   - @tournoi.users.each do |tu|
-    = tu.name
+    = tu.email
     %br  
 %p
-  %strong>Match enregistrés
+  %strong Match enregistrés
   %br
-  - @tournoi.wars.each do |tu|
-    = tu.user_1_id
-    %br   
+  - @tournoi.wars.each do |tw|
+    = User.find_by_id(tw.user_1_id).email 
+    VS 
+    = User.find_by_id(tw.user_2_id).email
+    %br  
+    = tw.scoreJ1
+    = tw.scoreJ2 
+    = Game.find_by_id(tw.game_id).title
+%p
+  %strong Score des users
+  = render 'ranking'
 =link_to 'Play', new_tournoi_war_path(@tournoi)
 - if current_user.admin?
   = link_to 'Edit', edit_tournoi_path(@tournoi)  |
