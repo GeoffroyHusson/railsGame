@@ -1,0 +1,41 @@
+%h1 Classement général
+- @game.each do |g|
+	- tab = []
+	%br
+	= g.title
+	%br
+	- @user.each do |u|
+		%br
+		= u.name
+		- score = @war.where(user_1_id: u.id,game_id: g.id).sum(:scoreJ1) + @war.where(user_2_id: u.id).sum(:scoreJ2)
+		- @W = 0
+		- @N = 0
+		- @L = 0
+		- @war.where(user_1_id: u.id,game_id: g.id).each do |sc|
+			- if sc.scoreJ1 == 3
+				- @W +=1
+			-  if sc.scoreJ1 == 1
+				- @N +=1
+			-  if sc.scoreJ1 == 0
+				- @L +=1
+		- @war.where(user_2_id: u.id,game_id: g.id).each do |sc|
+			- if sc.scoreJ2 == 3
+				- @W +=1
+			-  if sc.scoreJ2 == 1
+				- @N +=1
+			-  if sc.scoreJ2 == 0
+				- @L +=1
+		Gagnés : 
+		= @W
+		Perdus :
+		= @L
+		Nuls :
+		= @N
+		- s = [u.name,score,@W,@L,@N]
+		- tab.push(s)
+	%br
+	- tab.sort! {|a,b| b[1] <=> a[1]}
+	- tab.each do |x|
+		- x.each do |val|
+			%br
+			=val

@@ -5,4 +5,5 @@ class Tournoi < ActiveRecord::Base
 #	has_many :users, through: :wars
 	has_many :register_tournois
 	has_many :wars
+	has_one :location
 end

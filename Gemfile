@@ -47,3 +47,5 @@ gem 'omniauth-facebook'
 gem "haml", ">= 3.0.0"
 gem "haml-rails"
 gem "cancan"
+gem "geocoder"
+gem 'gmaps4rails'

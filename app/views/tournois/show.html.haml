@@ -16,10 +16,30 @@
   %strong Jeux sélectionnés:
   %br
   - @tournoi.games.each do |tg|
-    = tg.title 
     %br
-    =tg.description
     %br
+    = tg.title
+    = tg.description
+    - @var = 1
+    - wars = @tournoi.wars.where(game_id: tg.id)
+    - if wars.blank?
+      %br
+      Il n'y a pas de match pour ce jeu
+    - else
+      - wars.each do |tw|
+        %br
+        Match 
+        = @var
+        - @var +=1
+        = User.find(tw.user_1_id).email 
+        VS 
+        = User.find(tw.user_2_id).email  
+        - if tw.scoreJ1.blank?
+        - else
+          = tw.scoreJ1
+          = tw.scoreJ2
+
+      
 %p
   %strong Utilisateurs enregistrés:
   %br
@@ -27,18 +47,8 @@
     = tu.email
     %br  
 %p
-  %strong Match enregistrés
-  %br
-  - @tournoi.wars.each do |tw|
-    = User.find_by_id(tw.user_1_id).email 
-    VS 
-    = User.find_by_id(tw.user_2_id).email
-    %br  
-    = tw.scoreJ1
-    = tw.scoreJ2 
-    = Game.find_by_id(tw.game_id).title
-%p
   %strong Score des users
+  %br
   = render 'ranking'
 =link_to 'Play', new_tournoi_war_path(@tournoi)
 - if current_user.admin?

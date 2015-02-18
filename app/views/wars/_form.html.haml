@@ -16,12 +16,6 @@
     = f.label :joueur2
     = select("war", "user_2_id", @tournoi.users.collect {|p| [ p.name, p.id ] }, {include_blank: true})
   .field
-    = f.label :scoreJ1
-    = f.text_field :scoreJ1
-  .field
-    = f.label :scoreJ2
-    = f.text_field :scoreJ2
-  .field
     = f.label :game
     = select("war", "game_id", @tournoi.games.collect {|p| [ p.title, p.id ] }, {include_blank: true})
     %br

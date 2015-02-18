@@ -17,6 +17,7 @@ class TournoisController < ApplicationController
 
   def show
     set_tournoi
+    @game = Game.all
   end
 
   def new

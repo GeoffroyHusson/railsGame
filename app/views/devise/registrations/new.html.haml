@@ -20,6 +20,11 @@
     = f.label :password_confirmation
     %br/
     = f.password_field :password_confirmation, autocomplete: "off"
+  = f.fields_for :location do |ff|
+    .field
+      = ff.label :address
+      %br/
+      = ff.text_field :address
   .actions
     = f.submit "Sign up"
 = render "devise/shared/links"

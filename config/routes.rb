@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :user
   resources :games
+  resources :rankings
 
 
 
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
 
   get 'delete_tournoi/(:id)', to: "tournois#destroy", :as => "delete_tournoi"
   get 'register_tournoi/(:id)', to: "tournois#register", :as => "register_tournoi"
+
 
   devise_for :users,:controllers => { registrations: 'registrations' }, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
   

@@ -6,6 +6,7 @@
   %body
   - if user_signed_in?
     =link_to ('Liste des tournois'), root_path
+    =link_to ('Classement'), rankings_path
     =link_to ('Editer mon profil'), edit_user_registration_path(current_user)
     =link_to ('Déconnexion'), sign_out_path
     - if current_user.admin?

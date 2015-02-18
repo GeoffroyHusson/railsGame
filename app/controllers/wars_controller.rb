@@ -20,9 +20,21 @@ class WarsController < ApplicationController
 		end
 	end
 
+	def update
+		@war = War.find(params[:id])
+		 if @war.update_attributes(tournoi_params)
+      		redirect_to (@tournoi)
+   		 end
+	end
+
 	private
 		def war_params
-			params.require(:war).permit(:scoreJ1, :scoreJ2, :user_1_id, :user_2_id, :tournoi_id )
+			params.require(:war).permit(:user_1_id, :user_2_id, :tournoi_id, :game_id )
+		end
+
+
+		def war_update
+			params.require(:war).permit(:scoreJ1, :scoreJ2)
 		end
 
 		def set_action
