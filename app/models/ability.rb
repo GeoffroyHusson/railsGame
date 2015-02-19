@@ -8,7 +8,7 @@ class Ability
       can :manage, :all
       can :read, :all
       can :register, :all
-      cannot :create, :all
+      can :create, :all
     else
        can :read, :all
        can :register, :all

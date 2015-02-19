@@ -14,12 +14,13 @@
   .col-md-2
     Distance (km)
   .col-md-1
-.row
-  - @tournois.each do |tournoi| 
+- @tournois.each do |tournoi| 
+  .row
     .col-md-2
       = tournoi.name 
     .col-md-2
-      = tournoi.location.address
+      - if !tournoi.location.blank?
+        = tournoi.location.address
     .col-md-1
       = tournoi.nbPlayerMax 
     .col-md-1
@@ -27,7 +28,7 @@
     .col-md-2
       = tournoi.date
     .col-md-1 
-      - if !current_user.location.blank?
+      - if !current_user.location.blank? && !tournoi.location.blank?
         = current_user.location.distance_from([tournoi.location.latitude,tournoi.location.longitude]).round(2)
     .col-md-1
       %td= link_to 'Show', tournoi
