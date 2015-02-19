@@ -4,7 +4,7 @@ class TournoisController < ApplicationController
   before_action :acces_admin, only: [:edit,:show, :edit, :update, :destroy]
   before_action :set_tournoi, only: [:show, :edit, :update, :destroy, :register]
 
-  respond_to :html
+  #respond_to :html
 
   def index
     if user_signed_in?

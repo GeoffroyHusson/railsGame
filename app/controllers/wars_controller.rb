@@ -1,6 +1,7 @@
 class WarsController < ApplicationController
 	before_action :set_action, only: [:index, :show, :new, :create]
-	respond_to :html
+	skip_before_filter :verify_authenticity_token, :only => [:update]
+	#respond_to :html
 
 	def index
 		@war = War.new
@@ -22,9 +23,14 @@ class WarsController < ApplicationController
 
 	def update
 		@war = War.find(params[:id])
-		 if @war.update_attributes(tournoi_params)
-      		redirect_to (@tournoi)
-   		 end
+		@war.update_attributes(war_update)
+
+		respond_to do |format|
+      		format.js
+    	end
+		 #if @war.update_attributes(war_update)
+      	#	redirect_to (@war.tournoi)
+   		 #end
 	end
 
 	private

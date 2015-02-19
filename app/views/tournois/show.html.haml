@@ -35,6 +35,13 @@
         VS 
         = User.find(tw.user_2_id).email  
         - if tw.scoreJ1.blank?
+          #display_result
+            = form_for [@tournoi,@tournoi.wars.find(tw)], :remote => true do |f|
+              = f.label :Scorej1
+              = f.text_field :scoreJ1
+              = f.label :Scorej2
+              = f.text_field :scoreJ2
+              =f.submit "Save", :disable_with=>"Loading..."
         - else
           = tw.scoreJ1
           = tw.scoreJ2
