@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   end
   resource :geocoder
 
-  resources :user
+  resources :users
   resources :games
   resources :rankings
 
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get 'register_tournoi/(:id)', to: "tournois#register", :as => "register_tournoi"
 
 
-  devise_for :users,:controllers => { registrations: 'registrations' }, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
+  devise_for :users,:controllers => { registrations: 'registrations',:omniauth_callbacks => "callbacks" }, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
   
   devise_scope :user do
     get "sign_in", to: "devise/sessions#new"

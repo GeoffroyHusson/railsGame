@@ -40,7 +40,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 
 gem 'devise'
-
+gem 'omniauth'
 
 gem 'omniauth-facebook'
 
@@ -49,3 +49,4 @@ gem "haml-rails"
 gem "cancan"
 gem "geocoder"
 gem 'gmaps4rails'
+gem "certified"

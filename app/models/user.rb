@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
-  has_one :location
+  has_one :location, :as => :locatable
   accepts_nested_attributes_for :location
+
   has_many :games
   has_many :tournois, through: :register_tournois 
 #  has_many :tournois, through: :wars
@@ -24,4 +25,13 @@ class User < ActiveRecord::Base
   def get_statut
  	  self.statut = ADMIN
  end
+
+ def self.from_omniauth(auth)
+      where(facebook: auth.facebook, uid: auth.uid).first_or_create do |user|
+        user.facebook = auth.facebook
+        user.uid = auth.uid
+        user.email = auth.info.email
+        user.password = Devise.friendly_token[0,20]
+      end
+  end
 end

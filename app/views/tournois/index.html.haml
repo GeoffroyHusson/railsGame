@@ -1,30 +1,44 @@
 %p#notice= notice
 %h1 Liste des tournois
-%table
-  %thead
-    %tr
-      %th Nom
-      %th Lieu
-      %th Nombre de joueur max
-      %th Nombre d'inscrits
-      %th Date
-      %th{:colspan => "3"}
-  %tbody
-    - @tournois.each do |tournoi| 
-      %tr
-        %td= tournoi.name 
-        %td= tournoi.place 
-        %td= tournoi.nbPlayerMax 
-        %td= tournoi.users.count
-        %td= tournoi.date 
-        %td= link_to 'Show', tournoi 
-        - if can? :update, @tournoi
-          %td= link_to 'Edit', edit_tournoi_path(tournoi) 
-        %td= link_to 'Destroy', delete_tournoi_path(tournoi), method: :delete, data: { confirm: 'Are you sure?' } 
-        %td= link_to "S'enregister", register_tournoi_path(tournoi)
-        %br
-  %div{:style => "width: 800px;"}
-  #map{:style => "width: 800px; height: 400px;"}
+.row
+  .col-md-2
+    Nom
+  .col-md-2
+    Lieu
+  .col-md-1
+    Nombre de joueur max
+  .col-md-1
+    Nombre d'inscrits
+  .col-md-1
+    Date
+  .col-md-2
+    Distance (km)
+  .col-md-1
+.row
+  - @tournois.each do |tournoi| 
+    .col-md-2
+      = tournoi.name 
+    .col-md-2
+      = tournoi.location.address
+    .col-md-1
+      = tournoi.nbPlayerMax 
+    .col-md-1
+      = tournoi.users.count
+    .col-md-2
+      = tournoi.date
+    .col-md-1 
+      - if !current_user.location.blank?
+        = current_user.location.distance_from([tournoi.location.latitude,tournoi.location.longitude]).round(2)
+    .col-md-1
+      %td= link_to 'Show', tournoi
+      %br
+      - if can? :update, @tournoi
+        %td= link_to 'Edit', edit_tournoi_path(tournoi)
+        %br 
+      %td= link_to 'Destroy', delete_tournoi_path(tournoi), method: :delete, data: { confirm: 'Are you sure?' }
+      %br
+      %td= link_to "S'enregister", register_tournoi_path(tournoi)
+      %br
 = link_to 'New Tournoi', new_tournoi_path 
 
 

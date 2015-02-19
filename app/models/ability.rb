@@ -6,6 +6,9 @@ class Ability
     
     if user.admin?
       can :manage, :all
+      can :read, :all
+      can :register, :all
+      cannot :create, :all
     else
        can :read, :all
        can :register, :all

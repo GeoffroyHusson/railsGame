@@ -1,7 +1,7 @@
 class TournoisController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
-  before_action :acces_admin, only: [:edit]
+  before_action :acces_admin, only: [:edit,:show, :edit, :update, :destroy]
   before_action :set_tournoi, only: [:show, :edit, :update, :destroy, :register]
 
   respond_to :html
@@ -9,6 +9,7 @@ class TournoisController < ApplicationController
   def index
     if user_signed_in?
       @tournois = Tournoi.all
+      @user = current_user
       respond_with(@tournois)
     else 
       redirect_to new_user_session_path

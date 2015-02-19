@@ -1,7 +1,6 @@
 class Location < ActiveRecord::Base
-	belongs_to :user
-	belongs_to :tournoi
+	belongs_to :locatable, :polymorphic => true
 	validates_presence_of :address
-	#geocoded_by :address
-	after_validation :geocode  
+	geocoded_by :address
+	#after_validation :geocode  
 end

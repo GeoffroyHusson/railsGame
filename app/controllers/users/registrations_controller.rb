@@ -5,12 +5,21 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # GET /resource/sign_up
   def new
     super
-    @location = Location.new
+    @location = @user.location.new
   end
 
   # POST /resource
   def create
     super
+    session['devise.omniauth'] = nil unless @user.new_record?
+  end
+
+  def build_resource(*args)
+    super
+    if session['devise.omniauth']
+      @user.apply_omniauth(session['devise.omniauth'])
+      @user.valid?
+    end
   end
 
   # GET /resource/edit
@@ -61,6 +70,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   private
     def location_params
-      params.require(:location).permit(:address, :latitude, :longitude, :user_id)
+      params.require(:location).permit!
     end
 end
