@@ -10,7 +10,6 @@ class TournoisController < ApplicationController
     if user_signed_in?
       @tournois = Tournoi.all
       @user = current_user
-      respond_with(@tournois)
     else 
       redirect_to new_user_session_path
     end
@@ -24,7 +23,6 @@ class TournoisController < ApplicationController
   def new
     @tournoi = Tournoi.new
     @games = Game.all
-    respond_with(@tournoi)
   end
 
   def edit

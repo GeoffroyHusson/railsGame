@@ -25,9 +25,7 @@ class WarsController < ApplicationController
 		@war = War.find(params[:id])
 		@war.update_attributes(war_update)
 
-		respond_to do |format|
-      		format.js
-    	end
+		render json: "OK"
 		 #if @war.update_attributes(war_update)
       	#	redirect_to (@war.tournoi)
    		 #end
