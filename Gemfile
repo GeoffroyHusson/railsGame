@@ -50,3 +50,4 @@ gem "cancan"
 gem "geocoder"
 gem 'gmaps4rails'
 gem "certified"
+gem "node"

@@ -3,7 +3,7 @@ class TournoisController < ApplicationController
   before_action :authenticate_user!
   before_action :acces_admin, only: [:edit,:show, :edit, :update, :destroy]
   before_action :set_tournoi, only: [:show, :edit, :update, :destroy, :register]
-
+  before_action :check_wars_blank, only: [:update, :edit]
   #respond_to :html
 
   def index
@@ -26,8 +26,8 @@ class TournoisController < ApplicationController
   end
 
   def edit
-    @games = Game.all
-    authorize! :edit, @tournoi if can? :edit, @tournoi
+      @games = Game.all
+      authorize! :edit, @tournoi if can? :edit, @tournoi
   end
 
   def create
@@ -77,5 +77,11 @@ class TournoisController < ApplicationController
     def acces_admin
       current_user.admin?
     end
+    def check_wars_blank
+      unless @tournoi.wars.blank?
+        redirect_to tournoi_path, :flash => { :error => "Ce tournoi a déjà des matchs en cours ou cloturés, il ne peut être édité." }
+      end
+    end
+
 
 end

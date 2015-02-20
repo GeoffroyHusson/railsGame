@@ -9,7 +9,8 @@ class RankingsController < ApplicationController
 		@games.each do |g|
 			tab = []
 			@users.each do |u|
-		    	score = @wars.where(user_1_id: u.id,game_id: g.id).sum(:scoreJ1) + @wars.where(user_2_id: u.id).sum(:scoreJ2)
+				score = 0
+		    	score = @wars.where(user_1_id: u.id,game_id: g.id).sum(:scoreJ1) + @wars.where(user_2_id: u.id,game_id: g.id).sum(:scoreJ2)
 				w = 0
 				n = 0
 				l = 0

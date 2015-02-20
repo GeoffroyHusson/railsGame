@@ -16,35 +16,53 @@
   %strong Jeux sélectionnés:
   %br
   - @tournoi.games.each do |tg|
-    %br
-    %br
-    = tg.title
+    %h5
+      %span.label.label-default=tg.title
     = tg.description
+    %br
     - @var = 1
     - wars = @tournoi.wars.where(game_id: tg.id)
     - if wars.blank?
       %br
       Il n'y a pas de match pour ce jeu
     - else
-      - wars.each do |tw|
-        %br
-        Match 
-        = @var
-        - @var +=1
-        = User.find(tw.user_1_id).email 
-        VS 
-        = User.find(tw.user_2_id).email  
-        - if tw.scoreJ1.blank?
-          #display_result
-            = form_for [@tournoi,@tournoi.wars.find(tw)], :remote => true do |f|
-              = f.label :Scorej1
-              = f.text_field :scoreJ1
-              = f.label :Scorej2
-              = f.text_field :scoreJ2
-              =f.submit
-        - else
-          = tw.scoreJ1
-          = tw.scoreJ2
+      .col-xs-12
+        .col-xs-9
+          %table.table
+            %thead
+              %tr
+                %th
+                  ==#
+                %th
+                  Joueur 1
+                %th
+                  
+                %th 
+                  Joueur 2
+                %th 
+                  Score J1
+                %th 
+                  Score J2
+                %th     
+            - wars.each do |tw|
+              %tbody
+                %tr
+                  %td
+                    Match 
+                    = @var
+                    - @var +=1
+                  %td=User.find(tw.user_1_id).email 
+                  %td 
+                    VS 
+                  %td=User.find(tw.user_2_id).email  
+                  - if tw.scoreJ1.blank?
+                    = form_for [@tournoi,@tournoi.wars.find(tw)], :remote => true do |f|
+                      %td= f.text_field :scoreJ1
+                      %td= f.text_field :scoreJ2
+                      %td=f.submit
+                  - else
+                    %td= tw.scoreJ1
+                    %td= tw.scoreJ2
 
       
 %p
@@ -56,7 +74,9 @@
 %p
   %strong Score des users
   %br
-  = render 'ranking'
+  .col-xs-12
+    .col-xs-5
+      = render 'ranking'
 =link_to 'Play', new_tournoi_war_path(@tournoi)
 - if current_user.admin?
   = link_to 'Edit', edit_tournoi_path(@tournoi)  |

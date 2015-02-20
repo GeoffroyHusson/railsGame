@@ -1,8 +1,10 @@
 %h1 Classement général
+- var = 0
 - @games.each do |g|
 	%h3
 		%span.label.label-default=g.title
-	- @tabG.each do |x|
+		%br
+		%br
 		%table.table
 			%thead
 				%tr
@@ -17,7 +19,8 @@
 					%th 
 						Nuls
 			%tbody
-				- x.each do |val|
+				- @tabG[var].each do |x|
 					%tr
-					- val.each do |res|
-						%td=res
+						- x.each do |val|
+							%td=val
+	- var =+ 1
