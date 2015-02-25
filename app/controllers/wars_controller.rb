@@ -42,7 +42,7 @@ class WarsController < ApplicationController
 
 
 		def war_update
-			params.require(:war).permit(:scoreJ1, :scoreJ2)
+			params.require(:war).permit(:scorej1, :scorej2)
 		end
 
 		def set_action

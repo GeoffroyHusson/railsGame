@@ -9,4 +9,4 @@
 		%tbody
 			%tr
 				%td=tu.email
-				%td=@tournoi.wars.where(user_1_id: tu.id).sum(:scoreJ1) + @tournoi.wars.where(user_2_id: tu.id).sum(:scoreJ2)
+				%td=@tournoi.wars.where(user_1_id: tu.id).sum(:scorej1) + @tournoi.wars.where(user_2_id: tu.id).sum(:scorej2)

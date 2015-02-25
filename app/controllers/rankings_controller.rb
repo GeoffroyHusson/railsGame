@@ -10,9 +10,9 @@ class RankingsController < ApplicationController
 				w = 0
 				l = 0
 				n = 0
-				hash[:score] = game.wars.where(user_1_id: u.id,game_id: game.id).sum(:scoreJ1) + game.wars.where(user_2_id: u.id,game_id: game.id).sum(:scoreJ2)
+				hash[:score] = game.wars.where(user_1_id: u.id,game_id: game.id).sum(:scorej1) + game.wars.where(user_2_id: u.id,game_id: game.id).sum(:scorej2)
 				game.wars.where('user_1_id=? OR user_2_id=?', u.id,u.id).each do |sc|
-					case sc.scoreJ1
+					case sc.scorej1
 						when 3
 							sc.user_1_id == u.id ? hash[:w] +=1 : hash[:l] +=1
 						when 0

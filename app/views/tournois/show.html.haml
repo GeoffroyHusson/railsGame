@@ -55,14 +55,14 @@
                   %td 
                     VS 
                   %td=User.find(tw.user_2_id).email  
-                  - if tw.scoreJ1.blank?
+                  - if tw.scorej1.blank?
                     = form_for [@tournoi,@tournoi.wars.find(tw)], :remote => true do |f|
-                      %td= f.text_field :scoreJ1
-                      %td= f.text_field :scoreJ2
+                      %td= f.text_field :scorej1
+                      %td= f.text_field :scorej2
                       %td=f.submit
                   - else
-                    %td= tw.scoreJ1
-                    %td= tw.scoreJ2
+                    %td= tw.scorej1
+                    %td= tw.scorej2
 
       
 %p
