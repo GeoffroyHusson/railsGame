@@ -5,7 +5,12 @@ class GamesController < ApplicationController
 
 	def create
 		@game = current_user.games.new(game_params)
-		@game.save
+		if @game.save
+      redirect_to (@game)
+    else
+      flash[:error] = "Le formulaire a été mal complété"
+        render :action => :new
+    end
 	end
 
 	def index
@@ -24,6 +29,9 @@ class GamesController < ApplicationController
     @game = current_user.games.find(params[:id])
   	if @game.update_attributes(game_update)
       redirect_to (@game)
+    else
+      flash[:error] = "Le formulaire a été mal complété"
+        render :action => :edit
     end
   end
 

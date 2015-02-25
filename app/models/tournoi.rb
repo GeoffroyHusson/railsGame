@@ -6,4 +6,7 @@ class Tournoi < ActiveRecord::Base
 	has_many :wars
 	 has_one :location, :as => :locatable
   accepts_nested_attributes_for :location
+
+
+
 end

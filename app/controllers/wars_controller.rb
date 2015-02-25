@@ -1,6 +1,7 @@
 class WarsController < ApplicationController
 	before_action :set_action, only: [:index, :show, :new, :create]
 	skip_before_filter :verify_authenticity_token, :only => [:update]
+
 	#respond_to :html
 
 	def index
@@ -18,6 +19,9 @@ class WarsController < ApplicationController
 		@war.tournoi_id = @tournoi.id
 		if @war.save
 			redirect_to tournoi_path(@tournoi)
+		else
+			flash[:error] = "Le formulaire a été mal complété"
+    		render :action => :new
 		end
 	end
 

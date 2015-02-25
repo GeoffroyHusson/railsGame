@@ -1,14 +1,5 @@
 = form_for [@tournoi, @war] do |f|
-  - if @war.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@war.errors.count, "error") 
-        prohibited this war from being saved:
-
-      %ul
-        @war.errors.full_messages.each do |message|
-        %li 
-          = message
+  
   .field
     = f.label :joueur1
     = select("war", "user_1_id", @tournoi.users.collect {|p| [ p.name, p.id ] }, {include_blank: true})

@@ -33,13 +33,14 @@
     .col-md-1
       %td= link_to 'Show', tournoi
       %br
+      %td= link_to "S'enregister", register_tournoi_path(tournoi)
+      %br
       - if can? :update, @tournoi
         %td= link_to 'Edit', edit_tournoi_path(tournoi)
         %br 
-      %td= link_to 'Destroy', delete_tournoi_path(tournoi), method: :delete, data: { confirm: 'Are you sure?' }
+      - if can? :destroy, @tournoi
+        %td= link_to 'Destroy', delete_tournoi_path(tournoi), method: :delete, data: { confirm: 'Are you sure?' }
       %br
-      %td= link_to "S'enregister", register_tournoi_path(tournoi)
-      %br
-= link_to 'New Tournoi', new_tournoi_path 
-
-
+      
+- if can? :create, @tournoi
+  =link_to 'New Tournoi', new_tournoi_path 

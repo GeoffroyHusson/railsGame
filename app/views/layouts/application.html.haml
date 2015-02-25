@@ -2,7 +2,7 @@
   %head
   %title RailsGame
   = stylesheet_link_tag "application", media: "all" 
-  = javascript_include_tag "application"
+  = javascript_include_tag "default"
   = csrf_meta_tag 
   %body
     - if user_signed_in?
@@ -32,6 +32,12 @@
                 %li
                   Vous êtes un utilisateur
     .container
+      -if flash[:notice]
+        =flash[:notice]
+      -if flash[:warning]
+        =flash[:warning]
+      -if flash[:error]
+        =flash[:error]
       =yield
 
      

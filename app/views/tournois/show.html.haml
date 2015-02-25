@@ -77,7 +77,8 @@
   .col-xs-12
     .col-xs-5
       = render 'ranking'
-=link_to 'Play', new_tournoi_war_path(@tournoi)
-- if current_user.admin?
-  = link_to 'Edit', edit_tournoi_path(@tournoi)  |
-  = link_to 'Back', tournois_path
+- if can? :create, @war
+  =link_to 'Play', new_tournoi_war_path(@tournoi)
+- if can? :update, @tournoi
+  = link_to 'Edit', edit_tournoi_path(@tournoi)
+= link_to 'Back', tournois_path

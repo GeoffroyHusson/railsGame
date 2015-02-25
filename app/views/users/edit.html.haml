@@ -22,11 +22,11 @@
     %i (we need your current password to confirm your changes)
     %br/
     = f.password_field :current_password, autocomplete: "off"
-    = f.fields_for :location do |ff|
-      .field
-        = ff.label :address
-        %br/
-        = ff.text_field :address
+    %br
+    = fields_for "user[location_attributes]", @user.location do |task_form|
+      Adresse
+      %br/
+      = task_form.text_field :address
   .actions
     = f.submit "Update"
 = link_to "Back", :back

@@ -23,6 +23,7 @@ class TournoisController < ApplicationController
   def new
     @tournoi = Tournoi.new
     @games = Game.all
+    1.times { @tournoi.build_location }
   end
 
   def edit
@@ -71,7 +72,7 @@ class TournoisController < ApplicationController
     end
 
     def tournoi_params
-      params.require(:tournoi).permit(:name, :place, :nbPlayerMax, :date, :game_ids => [])
+      params.require(:tournoi).permit(:name, :place, :nbPlayerMax, :date, location_attributes: [:address], :game_ids => [])
     end
 
     def acces_admin
@@ -79,7 +80,8 @@ class TournoisController < ApplicationController
     end
     def check_wars_blank
       unless @tournoi.wars.blank?
-        redirect_to tournoi_path, :flash => { :error => "Ce tournoi a déjà des matchs en cours ou cloturés, il ne peut être édité." }
+        flash[:notice] = "Ce tournoi a déjà des matchs en cours ou cloturés, il ne peut être édité."
+        redirect_to tournoi_path
       end
     end
 

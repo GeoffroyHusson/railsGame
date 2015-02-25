@@ -1,46 +1,29 @@
 class RankingsController < ApplicationController
 	
 	def index
-		@tournois = Tournoi.all
-		@games = Game.all
-		@wars = War.all
-		@users = User.all
 		@tabG = []
-		@games.each do |g|
+		@games = Game.joins(:wars).where("wars.user_1_id IS NOT NULL").uniq
+		@games.each do |game|
 			tab = []
-			@users.each do |u|
-				score = 0
-		    	score = @wars.where(user_1_id: u.id,game_id: g.id).sum(:scoreJ1) + @wars.where(user_2_id: u.id,game_id: g.id).sum(:scoreJ2)
+			game.users.each do |u|
+				hash = {:name => 0,  :score => 0,:w => 0,:l => 0,:n => 0}
 				w = 0
-				n = 0
 				l = 0
-				@wars.where(user_1_id: u.id,game_id: g.id).each do |sc|
-					if sc.scoreJ1 == 3
-						w +=1
-					end
-					if sc.scoreJ1 == 1
-						n +=1
-					end
-					if sc.scoreJ1 == 0
-						l +=1
-					end
+				n = 0
+				hash[:score] = game.wars.where(user_1_id: u.id,game_id: game.id).sum(:scoreJ1) + game.wars.where(user_2_id: u.id,game_id: game.id).sum(:scoreJ2)
+				game.wars.where('user_1_id=? OR user_2_id=?', u.id,u.id).each do |sc|
+					case sc.scoreJ1
+						when 3
+							sc.user_1_id == u.id ? hash[:w] +=1 : hash[:l] +=1
+						when 0
+							sc.user_1_id == u.id ? hash[:l]+=1 : hash[:w] +=1
+						else hash[:n]+=1
+						end
 				end
-
-				@wars.where(user_2_id: u.id,game_id: g.id).each do |sc|
-					if sc.scoreJ2 == 3
-						w +=1
-					end
-					if sc.scoreJ2 == 1
-						n +=1
-					end
-					if sc.scoreJ2 == 0
-						l +=1
-					end
-				end
-				s = [u.name,score,w,l,n]
-				tab.push(s)
-				tab.sort! {|a,b| b[1] <=> a[1]}
+				hash[:name] = u.name
+				tab.push(hash)
 			end
+			tab.sort_by! { |m| m[:score]}.reverse!
 			@tabG.push(tab)
 		end
 	end
@@ -51,3 +34,5 @@ class RankingsController < ApplicationController
 	def update
 	end
 end
+
+
