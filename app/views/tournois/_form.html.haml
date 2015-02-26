@@ -12,10 +12,6 @@
     %br/
     = f.text_field :name
   .field
-    = f.label :place
-    %br/
-    = f.text_field :place
-  .field
     = f.label :nbPlayerMax
     %br/
     = f.text_field :nbPlayerMax
@@ -24,16 +20,20 @@
     %br/
     = f.date_select :date
     %br/
-
-  .field
-    - @games.each do |game|
-      = check_box_tag("tournoi[game_ids][]", game.id , @tournoi.game_ids.include?(game.id))
-      = game.title
+    .field
       %br
-    = fields_for "tournoi[location_attributes]", @tournoi.location do |task_form|
-      Adresse
-      %br/
-      = task_form.text_field :address
+      - @gamesUsed.each do |game|
+        = game.title
+        %br
+      - @games.each do |game|
+        = check_box_tag("tournoi[game_ids][]", game.id , @tournoi.game_ids.include?(game.id))
+        = game.title
+        %br
+      = fields_for "tournoi[location_attributes]", @tournoi.location do |task_form|
+        %br
+        Adresse
+        %br/
+        = task_form.text_field :address
 
   .actions
     = f.submit

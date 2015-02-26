@@ -3,7 +3,8 @@ class TournoisController < ApplicationController
   before_action :authenticate_user!
   before_action :acces_admin, only: [:edit,:show, :edit, :update, :destroy]
   before_action :set_tournoi, only: [:show, :edit, :update, :destroy, :register]
-  before_action :check_wars_blank, only: [:update, :edit]
+
+  #before_action :check_wars_blank, only: [:update, :edit]
   #respond_to :html
 
   def index
@@ -27,20 +28,25 @@ class TournoisController < ApplicationController
   end
 
   def edit
-      @games = Game.all
+      @gamesNotUsed = @tournoi.wars.pluck(:game_id).uniq
+      @gamesUsed = Game.where(id: @gamesNotUsed)
+      @games = Game.where.not(id: @gamesNotUsed)
       authorize! :edit, @tournoi if can? :edit, @tournoi
   end
 
   def create
     @tournoi = Tournoi.new(tournoi_params)
     @war = @tournoi.wars
+    @games = Game.all
     if @tournoi.save
+      flash[:notice] = "Tournoi créé avec succès"
       redirect_to root_path
+     else
+      render :action => 'new'
     end
   end
 
   def update
-    set_tournoi
     @games = Game.all
     if @tournoi.update_attributes(tournoi_params)
       redirect_to (@tournoi)
@@ -51,6 +57,7 @@ class TournoisController < ApplicationController
     @tournoi.tournoi_games.where("tournoi_id = ?",params[:id]).delete_all
     @tournoi.register_tournois.where("tournoi_id = ?",params[:id]).delete_all
     if @tournoi.destroy
+      flash[:notice] = "Le tournoi a été supprimé avec succès"
       redirect_to root_path
     end
   end
@@ -59,10 +66,11 @@ class TournoisController < ApplicationController
     @register_tournoi = RegisterTournoi.new
     @register_tournoi.user_id = current_user.id
     @register_tournoi.tournoi_id = params[:id]
-    if @tournoi.nbPlayerMax > @tournoi.users.count
-      if @register_tournoi.save
+    if @tournoi.nbPlayerMax > @tournoi.users.count && @register_tournoi.save
         redirect_to root_path
-      end
+    else 
+       flash[:warning] = "Vous ne pouvez pas vous enregistrer ou réenregistrer à ce tournoi"
+      redirect_to root_path
     end
   end
 
@@ -84,6 +92,4 @@ class TournoisController < ApplicationController
         redirect_to tournoi_path
       end
     end
-
-
 end

@@ -2,15 +2,13 @@ class War < ActiveRecord::Base
 	belongs_to :tournoi
 	belongs_to :game
 	belongs_to :user_1, :class_name => "User"
-  	belongs_to :user_2, :class_name => "User"
-  	validates :user_1_id,:user_2_id,:game_id, :presence => true
-  	validate :checkDataSamePlayer  
+  belongs_to :user_2, :class_name => "User"
+  validates :user_1_id,:user_2_id,:game_id, :presence => true
+  validate :checkDataSamePlayer 
+  validates_inclusion_of :scorej1, :in => [Tournoi::WIN, Tournoi::LOOSE, Tournoi::NULL],:message => "Merci de ne pas modifier la valeur des champs"
 
 
-  	#DEFINE
-  	WIN = 3
-  	LOST = 0
-  	DRAW = 1
+
 
   def checkDataSamePlayer
     if self.user_1_id == self.user_2_id

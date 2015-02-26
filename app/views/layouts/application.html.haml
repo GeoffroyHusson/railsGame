@@ -32,12 +32,9 @@
                 %li
                   Vous êtes un utilisateur
     .container
-      -if flash[:notice]
-        =flash[:notice]
-      -if flash[:warning]
-        =flash[:warning]
-      -if flash[:error]
-        =flash[:error]
+      %p#notice= notice
+      =flash[:warning]
+      =flash[:error]
       =yield
 
      
